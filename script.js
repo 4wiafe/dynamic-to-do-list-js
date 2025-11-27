@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  loadTasks();
   const addButton = document.getElementById("add-task-btn");
   const taskInput = document.getElementById("task-input");
   const taskList = document.getElementById("task-list");
@@ -60,6 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     taskInput.value = "";
   }
+
+  loadTasks();
 
   addButton.addEventListener("click", addTask);
 
