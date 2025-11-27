@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const taskInput = document.getElementById("task-input");
   const taskList = document.getElementById("task-list");
 
+  // Add task to list
   function addTask() {
     const taskText = taskInput.value.trim();
 
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     removeButton.addEventListener("click", removeTask)
 
+    //Remove task from list
     function removeTask() {
       taskList.removeChild(listItem);
     }
@@ -32,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   addButton.addEventListener("click", addTask);
 
+  // Press enter key to add task to list
   taskInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       addTask();
@@ -39,4 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return;
   });
+
+  // Fetch data once HTML is loaded
+  document.addEventListener("DOMContentLoaded", addTask);
 });
