@@ -42,7 +42,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return;
   });
-
-  // Fetch data once HTML is loaded
-  document.addEventListener("DOMContentLoaded", addTask);
 });
