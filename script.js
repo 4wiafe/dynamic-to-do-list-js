@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  loadTasks();
   const addButton = document.getElementById("add-task-btn");
   const taskInput = document.getElementById("task-input");
   const taskList = document.getElementById("task-list");
@@ -7,15 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
   let tasks = [];
 
   // Load stored tasks
-  try {
-    const parsed = JSON.parse(localStorage.getItem("tasks"));
+  function loadTasks() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem("tasks"));
 
-    if (Array.isArray(parsed)) {
-      tasks = parsed;
-      tasks.forEach(task => createTask(task));
+      if (Array.isArray(parsed)) {
+        tasks = parsed;
+        tasks.forEach((task) => createTask(task));
+      }
+    } catch (error) {
+      console.error("Failed to fetch data");
     }
-  } catch (error) {
-    console.error("Failed to fetch data");
   }
 
   // Create tasks
