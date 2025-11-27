@@ -3,6 +3,43 @@ document.addEventListener("DOMContentLoaded", function () {
   const taskInput = document.getElementById("task-input");
   const taskList = document.getElementById("task-list");
 
+  // Store tasks
+  let tasks = [];
+
+  // Load stored tasks
+  try {
+    const parsed = JSON.parse(localStorage.getItem("tasks"));
+
+    if (Array.isArray(parsed)) {
+      tasks = parsed;
+      tasks.forEach(task => createTask(task));
+    }
+  } catch (error) {
+    console.error("Failed to fetch data");
+  }
+
+  // Create tasks
+  function createTask(taskText) {
+    if (taskText === "") return;
+
+    const listItem = document.createElement("li");
+    listItem.textContent = taskText;
+    
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remove";
+    removeButton.classList.add("remove-btn");
+
+    removeButton.addEventListener("click", function () {
+      taskList.removeChild(listItem);
+
+      tasks = tasks.filter(task => task !== taskText);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    });
+
+    listItem.appendChild(removeButton);
+    taskList.appendChild(listItem);
+  }
+
   // Add task to list
   function addTask() {
     const taskText = taskInput.value.trim();
@@ -12,34 +49,19 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const listItem = document.createElement("li");
-    listItem.textContent = taskText;
+    tasks.push(taskText);
 
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    removeButton.classList.add("remove-btn");
-    listItem.appendChild(removeButton);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 
-    taskList.appendChild(listItem);
+    createTask(taskText);
 
     taskInput.value = "";
-
-    removeButton.addEventListener("click", removeTask)
-
-    //Remove task from list
-    function removeTask() {
-      taskList.removeChild(listItem);
-    }
   }
 
   addButton.addEventListener("click", addTask);
 
   // Press enter key to add task to list
   taskInput.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-      addTask();
-    }
-
-    return;
+    if (event.key === "Enter") addTask();
   });
 });
